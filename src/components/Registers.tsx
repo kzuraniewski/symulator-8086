@@ -7,9 +7,14 @@ export default function Registers({
 	registers: Record<RegisterName, string>;
 }) {
 	return (
-		<Stack spacing={2} justifyContent="center" alignItems="center">
+		<Stack
+			spacing={2}
+			justifyContent="center"
+			alignItems="center"
+			minWidth={200}
+		>
 			{Object.entries(registers).map(([name, value]) => (
-				<Typography>
+				<Typography key={`register_${name}`}>
 					{name}: {value || '[empty]'}
 				</Typography>
 			))}

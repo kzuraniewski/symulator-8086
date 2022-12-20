@@ -36,22 +36,28 @@ const App = () => {
 				</Box>
 
 				<Paper sx={{ p: 2 }}>
+					<Box sx={{ mx: 'auto', mb: 4, width: 'fit-content' }}>
+						<OrderSelect
+							methodName={methodName}
+							onChange={setMethodName}
+						/>
+					</Box>
+
 					<Stack
 						direction="row"
 						justifyContent="space-between"
 						alignItems="stretch"
+						spacing={3}
 					>
-						<div>
-							<OrderSelect
-								methodName={methodName}
-								onChange={setMethodName}
-							/>
-
-							<ParametersForm
-								params={inputParams}
-								onChange={setInputParams}
-							/>
-						</div>
+						<ParametersForm
+							params={inputParams}
+							onChange={(paramName, value) =>
+								setInputParams((params) => ({
+									...params,
+									[paramName]: value,
+								}))
+							}
+						/>
 
 						<Registers registers={simulated.registers} />
 					</Stack>
