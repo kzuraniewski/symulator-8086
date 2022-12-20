@@ -27,6 +27,7 @@ export default function ParametersForm({
 		<Stack direction="row" flexWrap="wrap" gap="20px" maxWidth={300}>
 			{fieldTemplates.map(([name, type]) => (
 				<TextField
+					key={`param_${name}`}
 					label={name}
 					type={type}
 					value={params[name]}
