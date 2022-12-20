@@ -8,23 +8,6 @@ import {
 } from '../simulator/simulationTypes';
 import { initialRegisterValues } from '../simulator/simulatedReducer';
 
-const useInputParams = () => {
-	const initialParams = {
-		...initialRegisterValues,
-		offset: 0,
-	};
-	const [inputParams, setInputParams] =
-		useState<SimulationInputParameters>(initialParams);
-
-	const reset = () => setInputParams(initialParams);
-
-	return {
-		inputParams,
-		setInputParams,
-		reset,
-	};
-};
-
 const App = () => {
 	const [methodName, setMethodName] = useState<MethodName>('MOV');
 	const {
@@ -103,6 +86,23 @@ const App = () => {
 			</Box>
 		</Box>
 	);
+};
+
+const useInputParams = () => {
+	const initialParams = {
+		...initialRegisterValues,
+		offset: 0,
+	};
+	const [inputParams, setInputParams] =
+		useState<SimulationInputParameters>(initialParams);
+
+	const reset = () => setInputParams(initialParams);
+
+	return {
+		inputParams,
+		setInputParams,
+		reset,
+	};
 };
 
 export default App;
