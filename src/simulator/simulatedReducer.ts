@@ -1,8 +1,5 @@
 import React from 'react';
-
-export type RegisterName = 'AX' | 'BX' | 'CX' | 'DX';
-
-export type MethodName = 'MOV' | 'XHCG' | 'PUSH' | 'POP';
+import { RegisterName } from './simulationTypes';
 
 export type Action =
 	| { type: 'order/MOV'; to: RegisterName; value: string }
@@ -16,14 +13,16 @@ export type State = {
 	registers: Record<RegisterName, string>;
 };
 
+export const initialRegisterValues = {
+	AX: '',
+	BX: '',
+	CX: '',
+	DX: '',
+} satisfies Record<RegisterName, string>;
+
 export const initialSimulatedState: State = {
 	stack: [],
-	registers: {
-		AX: '',
-		BX: '',
-		CX: '',
-		DX: '',
-	},
+	registers: initialRegisterValues,
 };
 
 const simulatedReducer: React.Reducer<State, Action> = (state, action) => {

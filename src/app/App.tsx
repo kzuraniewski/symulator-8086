@@ -1,15 +1,30 @@
 import { useState } from 'react';
-import { Box, Button, Paper, TextField, Typography } from '@mui/material';
-import { Registers, OrderSelect } from '@/components';
+import { Box, Button, Paper, Stack, Typography } from '@mui/material';
+import { Registers, OrderSelect, ParametersForm } from '@/components';
 import useSimulator from '@/simulator/useSimulator';
-import type { MethodName } from '@/simulator/simulatedReducer';
+import {
+	MethodName,
+	SimulationInputParameters,
+} from '@/simulator/simulationTypes';
+import { initialRegisterValues } from '@/simulator/simulatedReducer';
 
 const App = () => {
 	const [methodName, setMethodName] = useState<MethodName>('MOV');
+	const [inputParams, setInputParams] = useState<SimulationInputParameters>({
+		...initialRegisterValues,
+		offset: 0,
+	});
 	const {
 		simulated,
+		reset,
 		orders: { mov, xhcg, push, pop },
 	} = useSimulator();
+
+	const handleCalculate = () => {
+		const { AX, BX, CX, DX, offset } = inputParams;
+
+		// do stuff...
+	};
 
 	return (
 		<Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: '100vh' }}>
@@ -21,12 +36,10 @@ const App = () => {
 				</Box>
 
 				<Paper sx={{ p: 2 }}>
-					<Box
-						sx={{
-							display: 'flex',
-							justifyContent: 'space-between',
-							alignItems: 'stretch',
-						}}
+					<Stack
+						direction="row"
+						justifyContent="space-between"
+						alignItems="stretch"
 					>
 						<div>
 							<OrderSelect
@@ -34,52 +47,27 @@ const App = () => {
 								onChange={setMethodName}
 							/>
 
-							<Box
-								sx={{
-									mt: 3,
-									display: 'flex',
-									flexDirection: 'column',
-									gap: 1,
-								}}
-							>
-								{['BX', 'BP', 'DI', 'SI', 'offset'].map(
-									(name) => (
-										<TextField
-											label={name}
-											variant="filled"
-											size="small"
-										/>
-									)
-								)}
-							</Box>
+							<ParametersForm
+								params={inputParams}
+								onChange={setInputParams}
+							/>
 						</div>
 
 						<Registers registers={simulated.registers} />
-					</Box>
+					</Stack>
 
-					<Box
-						sx={{
-							display: 'flex',
-							justifyContent: 'center',
-							gap: 3,
-							mt: 5,
-						}}
-					>
-						<Button variant="outlined">RESETUJ</Button>
-						<Button variant="contained">OBLICZ</Button>
-					</Box>
+					<Stack spacing={3} mt={5}>
+						<Button variant="outlined" onClick={reset}>
+							RESETUJ
+						</Button>
+						<Button variant="contained" onClick={handleCalculate}>
+							OBLICZ
+						</Button>
+					</Stack>
 				</Paper>
 			</Box>
 		</Box>
 	);
 };
-
-/*
-
-var max = -99999999;
-foreach (var el in ...) if (el > max) max = el;
-...
-
-*/
 
 export default App;
