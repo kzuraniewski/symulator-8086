@@ -8,12 +8,30 @@ import {
 } from '../simulator/simulationTypes';
 import { initialRegisterValues } from '../simulator/simulatedReducer';
 
-const App = () => {
-	const [methodName, setMethodName] = useState<MethodName>('MOV');
-	const [inputParams, setInputParams] = useState<SimulationInputParameters>({
+const useInputParams = () => {
+	const initialParams = {
 		...initialRegisterValues,
 		offset: 0,
-	});
+	};
+	const [inputParams, setInputParams] =
+		useState<SimulationInputParameters>(initialParams);
+
+	const reset = () => setInputParams(initialParams);
+
+	return {
+		inputParams,
+		setInputParams,
+		reset,
+	};
+};
+
+const App = () => {
+	const [methodName, setMethodName] = useState<MethodName>('MOV');
+	const {
+		inputParams,
+		setInputParams,
+		reset: resetInputParams,
+	} = useInputParams();
 	const {
 		simulated,
 		reset,
@@ -68,7 +86,13 @@ const App = () => {
 						justifyContent="center"
 						mt={5}
 					>
-						<Button variant="outlined" onClick={reset}>
+						<Button
+							variant="outlined"
+							onClick={() => {
+								reset();
+								resetInputParams();
+							}}
+						>
 							RESETUJ
 						</Button>
 						<Button variant="contained" onClick={handleCalculate}>
