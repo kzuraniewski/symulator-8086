@@ -1,5 +1,5 @@
 import { ToggleButtonGroup, ToggleButton } from '@mui/material';
-import type { MethodName } from '@/simulator/simulationTypes';
+import type { MethodName } from '../simulator/simulationTypes';
 
 const methodNames: MethodName[] = ['MOV', 'XHCG', 'POP', 'PUSH'];
 

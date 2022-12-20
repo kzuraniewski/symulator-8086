@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Box, Button, Paper, Stack, Typography } from '@mui/material';
-import { Registers, OrderSelect, ParametersForm } from '@/components';
-import useSimulator from '@/simulator/useSimulator';
+import { Registers, OrderSelect, ParametersForm } from '../components';
+import useSimulator from '../simulator/useSimulator';
 import {
 	MethodName,
 	SimulationInputParameters,
-} from '@/simulator/simulationTypes';
-import { initialRegisterValues } from '@/simulator/simulatedReducer';
+} from '../simulator/simulationTypes';
+import { initialRegisterValues } from '../simulator/simulatedReducer';
 
 const App = () => {
 	const [methodName, setMethodName] = useState<MethodName>('MOV');
@@ -28,7 +28,7 @@ const App = () => {
 
 	return (
 		<Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: '100vh' }}>
-			<Box sx={{ margin: '0 auto', maxWidth: 600 }}>
+			<Box sx={{ margin: '0 auto', maxWidth: 800 }}>
 				<Box component="header" mb={4}>
 					<Typography variant="h3" align="center">
 						Symulator
@@ -56,7 +56,12 @@ const App = () => {
 						<Registers registers={simulated.registers} />
 					</Stack>
 
-					<Stack spacing={3} mt={5}>
+					<Stack
+						spacing={3}
+						direction="row"
+						justifyContent="center"
+						mt={5}
+					>
 						<Button variant="outlined" onClick={reset}>
 							RESETUJ
 						</Button>

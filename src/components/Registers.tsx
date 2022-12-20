@@ -1,5 +1,5 @@
-import { Box, Stack, Typography } from '@mui/material';
-import { RegisterName } from '@/simulator/simulatedReducer';
+import { Stack, Typography } from '@mui/material';
+import type { RegisterName } from '../simulator/simulationTypes';
 
 export default function Registers({
 	registers,

@@ -1,24 +1,26 @@
-import { Stack, TextField } from '@mui/material';
-import type { SimulationInputParameters } from '@/simulator/simulationTypes';
+import { TextField, Unstable_Grid2 as Grid } from '@mui/material';
+import type { SimulationInputParameters } from '../simulator/simulationTypes';
 
 export default function ParametersForm({
-	params: value,
+	params,
 	onChange,
 }: {
 	params: SimulationInputParameters;
 	onChange?: (values: SimulationInputParameters) => void;
 }) {
 	return (
-		<Stack spacing={1} mt={3}>
-			{['BX', 'BP', 'DI', 'SI', 'offset'].map((name) => (
-				<TextField
-					value={'asd'}
-					key={name}
-					label={name}
-					variant="filled"
-					size="small"
-				/>
+		<Grid container spacing={2} my={2}>
+			{(['BX', 'BP', 'DI', 'SI', 'offset'] as const).map((name) => (
+				<Grid xs={6}>
+					<TextField
+						key={name}
+						value={params[name]}
+						label={name}
+						variant="filled"
+						size="small"
+					/>
+				</Grid>
 			))}
-		</Stack>
+		</Grid>
 	);
 }

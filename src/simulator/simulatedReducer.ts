@@ -18,6 +18,9 @@ export const initialRegisterValues = {
 	BX: '',
 	CX: '',
 	DX: '',
+	BP: '',
+	DI: '',
+	SI: '',
 } satisfies Record<RegisterName, string>;
 
 export const initialSimulatedState: State = {
