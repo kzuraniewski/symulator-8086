@@ -24,7 +24,20 @@ const App = () => {
 	const handleCalculate = () => {
 		const { AX, BX, CX, DX, offset } = inputParams;
 
-		// do stuff...
+		switch (methodName) {
+			case 'MOV':
+				console.log('MOV action initiated');
+				return;
+			case 'XHCG':
+				console.log('XHCG action initiated');
+				return;
+			case 'PUSH':
+				console.log('PUSH action initiated');
+				return;
+			case 'POP':
+				console.log('POP action initiated');
+				return;
+		}
 	};
 
 	return (
