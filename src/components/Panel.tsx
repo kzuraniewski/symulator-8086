@@ -8,7 +8,7 @@ export default function Panel({
 	children?: React.ReactNode;
 }) {
 	return (
-		<Paper sx={{ p: 2, width: '100%' }}>
+		<Paper sx={{ p: 2, height: '100%' }}>
 			{label && (
 				<Typography variant="h2" mb={2}>
 					{label}
