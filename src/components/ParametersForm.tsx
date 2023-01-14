@@ -1,13 +1,9 @@
 import { Stack } from '@mui/material';
-import {
-	// AddressingModeSelect,
-	Field,
-	Panel,
-} from '../components';
+import { AddressingModeSelect, Field, Panel } from '../components';
 import { fromHex, isHexFormat, toHex } from '../lib/hex';
 import type {
 	ElementaryValue,
-	// AddressingMode,
+	AddressingMode,
 	RegisterName,
 	State,
 } from '../simulator/simulatedReducer';
@@ -15,14 +11,16 @@ import type {
 export default function ParametersForm({
 	params,
 	onRegisterChange,
+	onOffsetChange,
+	onAddressingModeChange,
 }: {
 	params: State;
 	onRegisterChange?: (
 		registerName: RegisterName,
 		value: ElementaryValue
 	) => void;
-	// onOffsetChange?: (value: number) => void;
-	// onAddressingModeChange?: (value: AddressingMode) => void;
+	onOffsetChange?: (value: number) => void;
+	onAddressingModeChange?: (value: AddressingMode) => void;
 }) {
 	const handleRegisterValueChange = (
 		registerName: RegisterName,
@@ -36,6 +34,18 @@ export default function ParametersForm({
 		}
 
 		onRegisterChange?.(registerName as RegisterName, fromHex(value));
+	};
+
+	// FIXME: Duplicated code
+	const handleOffsetValueChange = (value: string) => {
+		if (!isHexFormat(value)) {
+			console.info(
+				`Cannot update register's value to "${value}" as it is not a valid hex format`
+			);
+			return;
+		}
+
+		onOffsetChange?.(fromHex(value));
 	};
 
 	return (
@@ -69,21 +79,20 @@ export default function ParametersForm({
 						)
 					)}
 
-					{/* FIXME: Value not updated
-				<Field
-					label="Offset"
-					type="number"
-					value={params.offset}
-					onChange={(event) =>
-						onOffsetChange?.(Number(event.target.value))
-					}
-				/> */}
-				</Stack>
+					<Field
+						label="Offset"
+						type="text"
+						value={toHex(params.offset)}
+						onChange={(event) =>
+							handleOffsetValueChange(event.target.value)
+						}
+					/>
 
-				{/* <AddressingModeSelect
-				value={params.addressingMode}
-				onChange={(value) => onAddressingModeChange?.(value)}
-			/> */}
+					{/* <AddressingModeSelect
+						value={params.addressingMode}
+						onChange={(value) => onAddressingModeChange?.(value)}
+					/> */}
+				</Stack>
 			</Stack>
 		</Panel>
 	);

@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from '@mui/material';
+import { Box, Paper } from '@mui/material';
 import { Panel } from '.';
 import { Memory } from '../simulator/simulatedReducer';
 

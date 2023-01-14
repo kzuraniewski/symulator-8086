@@ -1,8 +1,10 @@
 import { useCallback, useReducer } from 'react';
+import { Argument } from '../lib/interpreter';
 import simulatedReducer, {
 	AddressingMode,
 	ElementaryValue,
 	initialSimulatedState,
+	OrderName,
 	RegisterName,
 } from './simulatedReducer';
 
@@ -12,43 +14,27 @@ const useSimulator = () => {
 		initialSimulatedState
 	);
 
-	const mov = useCallback(
-		(to: RegisterName, from: RegisterName) =>
+	const execute = useCallback(
+		() =>
 			dispatch({
-				type: 'order/MOV',
-				to,
-				from,
+				type: 'order/executeOrder',
 			}),
 		[]
 	);
 
-	const xhcg = useCallback(
-		(first: RegisterName, second: RegisterName) =>
-			dispatch({
-				type: 'order/XHCG',
-				first,
-				second,
-			}),
-		[]
-	);
+	const setOrderName = useCallback((orderName: OrderName) => {
+		dispatch({
+			type: 'state/setOrderName',
+			value: orderName,
+		});
+	}, []);
 
-	const push = useCallback(
-		(from: RegisterName) =>
-			dispatch({
-				type: 'order/PUSH',
-				from,
-			}),
-		[]
-	);
-
-	const pop = useCallback(
-		(to: RegisterName) =>
-			dispatch({
-				type: 'order/POP',
-				to,
-			}),
-		[]
-	);
+	const setArguments = useCallback((args: Argument[]) => {
+		dispatch({
+			type: 'state/setArguments',
+			value: args,
+		});
+	}, []);
 
 	const setRegister = useCallback(
 		(registerName: RegisterName, value: ElementaryValue) => {
@@ -90,15 +76,12 @@ const useSimulator = () => {
 	const properties = {
 		simulated,
 		resetSimulationState,
+		setOrderName,
+		setArguments,
 		setRegister,
 		setOffset,
 		setAddressingMode,
-		orders: {
-			mov,
-			xhcg,
-			push,
-			pop,
-		},
+		execute,
 	};
 
 	return properties;

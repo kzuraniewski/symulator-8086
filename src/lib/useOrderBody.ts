@@ -1,14 +1,18 @@
 import { useCallback, useState } from 'react';
 import { OrderName, RegisterName } from '../simulator/simulatedReducer';
+import { Argument } from './interpreter';
 
 export type OrderBody = {
 	orderName: OrderName;
-	arguments: RegisterName[];
+	arguments: Argument[];
 };
 
 export const initialOrderBody: OrderBody = {
 	orderName: 'MOV',
-	arguments: ['AX', 'BX'],
+	arguments: [
+		{ type: 'register', value: 'AX' },
+		{ type: 'register', value: 'BX' },
+	],
 };
 
 // TODO: infer this from state
