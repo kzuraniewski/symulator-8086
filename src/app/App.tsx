@@ -1,12 +1,19 @@
 import { useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import { Layout, Registers, OrderSelect, ParametersForm } from '../components';
+import {
+	Layout,
+	OrderSelect,
+	ParametersForm,
+	AddressingModeSelect,
+} from '../components';
 import useSimulator from '../simulator/useSimulator';
-import { MethodName } from '../simulator/simulationTypes';
+import { AddressingMode, MethodName } from '../simulator/simulationTypes';
 import useInputParams from '../lib/useInputParams';
 
 export default function App() {
 	const [methodName, setMethodName] = useState<MethodName>('MOV');
+	const [addressingMode, setAddressingMode] =
+		useState<AddressingMode>('base');
 	const { inputParams, setInputParams, resetInputParams } = useInputParams();
 	const {
 		simulated,
@@ -20,18 +27,27 @@ export default function App() {
 
 		switch (methodName) {
 			case 'MOV':
-				console.log('MOV action initiated');
+				console.log('MOV action initiated from BX to AX');
+				mov('BX', 'AX');
 				return;
 			case 'XHCG':
 				console.log('XHCG action initiated');
 				return;
 			case 'PUSH':
-				console.log('PUSH action initiated');
+				console.log('PUSH action initiated for AX');
+				push('AX');
 				return;
 			case 'POP':
-				console.log('POP action initiated');
+				console.log('POP action initiated for AX');
+				pop('AX');
 				return;
 		}
+	};
+
+	const reset = () => {
+		resetSimulationState();
+		resetInputParams();
+		setAddressingMode('index');
 	};
 
 	return (
@@ -56,17 +72,14 @@ export default function App() {
 					}
 				/>
 
-				<Registers registers={simulated.registers} />
+				<AddressingModeSelect
+					value={addressingMode}
+					onChange={setAddressingMode}
+				/>
 			</Stack>
 
 			<Stack spacing={3} direction="row" justifyContent="center" mt={5}>
-				<Button
-					variant="outlined"
-					onClick={() => {
-						resetSimulationState();
-						resetInputParams();
-					}}
-				>
+				<Button variant="outlined" onClick={reset}>
 					RESETUJ
 				</Button>
 				<Button variant="contained" onClick={handleCalculate}>

@@ -5,6 +5,7 @@ const fieldTemplates: [
 	keyof SimulationInputParameters,
 	TextFieldProps['type']
 ][] = [
+	['AX', 'text'],
 	['BX', 'text'],
 	['BP', 'text'],
 	['DI', 'text'],

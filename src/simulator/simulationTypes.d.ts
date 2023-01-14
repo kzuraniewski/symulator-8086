@@ -4,6 +4,8 @@ export type MethodName = 'MOV' | 'XHCG' | 'PUSH' | 'POP';
 
 export type AddressingMode = 'base' | 'index' | 'base-index';
 
+export type Memory = number[];
+
 export type SimulationInputParameters = Record<RegisterName, string> & {
 	offset: number;
 	addressingMode: AddressingMode;
