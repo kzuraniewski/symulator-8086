@@ -1,15 +1,12 @@
 import { Box, Paper, Typography } from '@mui/material';
+import { Panel } from '.';
 import { Memory } from '../simulator/simulatedReducer';
 
 const VIEW_WIDTH = 16;
 
 export default function MemoryView({ memory }: { memory: Memory }) {
 	return (
-		<Paper sx={{ p: 2 }}>
-			<Typography variant="h2" mb={2}>
-				Pamięć
-			</Typography>
-
+		<Panel label="Pamięć">
 			<Paper
 				sx={{
 					display: 'grid',
@@ -32,6 +29,6 @@ export default function MemoryView({ memory }: { memory: Memory }) {
 					</Box>
 				))}
 			</Paper>
-		</Paper>
+		</Panel>
 	);
 }
