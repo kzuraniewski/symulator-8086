@@ -68,6 +68,9 @@ export default function SimulatorController() {
 					<Actions
 						onCalculate={handleCalculate}
 						onReset={handleReset}
+						disableCalculate={
+							orderBody.arguments[0] === orderBody.arguments[1]
+						}
 					/>
 				</Stack>
 			</Grid>
