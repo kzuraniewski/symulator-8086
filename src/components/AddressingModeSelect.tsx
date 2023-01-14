@@ -22,14 +22,14 @@ export default function AddressingModeSelect({
 				onChange={(e) => onChange(e.target.value as AddressingMode)}
 			>
 				<FormControlLabel
-					value="index"
-					control={<Radio />}
-					label="Indeksowe"
-				/>
-				<FormControlLabel
 					value="base"
 					control={<Radio />}
 					label="Bazowe"
+				/>
+				<FormControlLabel
+					value="index"
+					control={<Radio />}
+					label="Indeksowe"
 				/>
 				<FormControlLabel
 					value="base-index"

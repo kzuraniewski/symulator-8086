@@ -3,6 +3,7 @@ import { Box, Button, Stack } from '@mui/material';
 import { Layout, OrderSelect, ParametersForm } from '../components';
 import useSimulator from '../simulator/useSimulator';
 import { MethodName } from '../simulator/simulationTypes';
+import Actions from '../components/Actions';
 
 export default function App() {
 	const [methodName, setMethodName] = useState<MethodName>('MOV');
@@ -36,6 +37,11 @@ export default function App() {
 		}
 	};
 
+	const handleReset = () => {
+		resetSimulationState();
+		setMethodName('MOV');
+	};
+
 	return (
 		<Layout>
 			<Box sx={{ mx: 'auto', mb: 4, width: 'fit-content' }}>
@@ -49,14 +55,7 @@ export default function App() {
 				onAddressingModeChange={setAddressingMode}
 			/>
 
-			<Stack spacing={3} direction="row" justifyContent="center" mt={5}>
-				<Button variant="outlined" onClick={resetSimulationState}>
-					RESETUJ
-				</Button>
-				<Button variant="contained" onClick={handleCalculate}>
-					OBLICZ
-				</Button>
-			</Stack>
+			<Actions onCalculate={handleCalculate} onReset={handleReset} />
 		</Layout>
 	);
 }
