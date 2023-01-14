@@ -1,6 +1,7 @@
 import { useCallback, useReducer } from 'react';
 import simulatedReducer, {
 	AddressingMode,
+	ElementaryValue,
 	initialSimulatedState,
 	RegisterName,
 } from './simulatedReducer';
@@ -50,7 +51,7 @@ const useSimulator = () => {
 	);
 
 	const setRegister = useCallback(
-		(registerName: RegisterName, value: string) => {
+		(registerName: RegisterName, value: ElementaryValue) => {
 			dispatch({
 				type: 'state/setRegister',
 				registerName,
@@ -61,7 +62,7 @@ const useSimulator = () => {
 	);
 
 	const setOffset = useCallback(
-		(value: number) =>
+		(value: ElementaryValue) =>
 			dispatch({
 				type: 'state/setOffset',
 				value,

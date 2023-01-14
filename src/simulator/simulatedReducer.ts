@@ -1,5 +1,7 @@
 import React from 'react';
 
+export const MAX_ELEMENTARY_VALUE = 65535;
+
 export const registerNames = [
 	'AX',
 	'BX',
@@ -22,30 +24,35 @@ export type AddressingMode = typeof addressingModes[number];
 
 export type Memory = number[];
 
+export type Stack = number[];
+
+export type ElementaryValue = number;
+
+// prettier-ignore
 export type Action =
 	| { type: 'order/MOV'; to: RegisterName; from: RegisterName }
 	| { type: 'order/XHCG'; first: RegisterName; second: RegisterName }
 	| { type: 'order/PUSH'; from: RegisterName }
 	| { type: 'order/POP'; to: RegisterName }
-	| { type: 'state/setOffset'; value: number }
+	| { type: 'state/setOffset'; value: ElementaryValue }
 	| { type: 'state/setAddressingMode'; value: AddressingMode }
-	| { type: 'state/setRegister'; registerName: RegisterName; value: string }
+	| { type: 'state/setRegister'; registerName: RegisterName; value: ElementaryValue }
 	| { type: 'state/reset' };
 
 export type State = {
-	stack: string[];
-	registers: Record<RegisterName, string>;
+	stack: Stack;
+	registers: Record<RegisterName, ElementaryValue>;
 	memory: Memory;
 	addressingMode: AddressingMode;
-	offset: number;
+	offset: ElementaryValue;
 };
 
 export const initialRegisterValues = registerNames.reduce(
-	(acc: Partial<Record<RegisterName, string>>, curr) => (
-		(acc[curr] = ''), acc
+	(acc: Partial<Record<RegisterName, ElementaryValue>>, curr) => (
+		(acc[curr] = 0), acc
 	),
 	{}
-) as Record<RegisterName, ''>;
+) as Record<RegisterName, ElementaryValue>;
 
 export const initialSimulatedState: State = {
 	stack: [],
@@ -55,7 +62,10 @@ export const initialSimulatedState: State = {
 	offset: 0,
 };
 
-const simulatedReducer: React.Reducer<State, Action> = (state, action) => {
+const simulatedReducer: React.Reducer<State, Action> = (
+	state,
+	action
+): State => {
 	switch (action.type) {
 		case 'order/MOV': {
 			const { to, from } = action;
@@ -89,7 +99,7 @@ const simulatedReducer: React.Reducer<State, Action> = (state, action) => {
 			const { to } = action;
 
 			if (!state.stack.length) {
-				console.error('Cannot perform POP order - the stack is empty');
+				console.info('Cannot perform POP order - the stack is empty');
 				return state;
 			}
 
@@ -104,6 +114,14 @@ const simulatedReducer: React.Reducer<State, Action> = (state, action) => {
 		}
 		case 'state/setRegister': {
 			const { registerName, value } = action;
+
+			if (value > MAX_ELEMENTARY_VALUE) {
+				console.info(
+					"Cannot update register's value as it exceeds register's maximum value"
+				);
+				return state;
+			}
+
 			return {
 				...state,
 				registers: {
@@ -116,7 +134,7 @@ const simulatedReducer: React.Reducer<State, Action> = (state, action) => {
 			const { value } = action;
 			return {
 				...state,
-				offsset: value,
+				offset: value,
 			};
 		}
 		case 'state/setAddressingMode': {

@@ -3,7 +3,9 @@ import {
 	// AddressingModeSelect,
 	Field,
 } from '../components';
+import { fromHex, isHexFormat, toHex } from '../lib/hex';
 import type {
+	ElementaryValue,
 	// AddressingMode,
 	RegisterName,
 	State,
@@ -14,10 +16,27 @@ export default function ParametersForm({
 	onRegisterChange,
 }: {
 	params: State;
-	onRegisterChange?: (registerName: RegisterName, value: string) => void;
+	onRegisterChange?: (
+		registerName: RegisterName,
+		value: ElementaryValue
+	) => void;
 	// onOffsetChange?: (value: number) => void;
 	// onAddressingModeChange?: (value: AddressingMode) => void;
 }) {
+	const handleRegisterValueChange = (
+		registerName: RegisterName,
+		value: string
+	) => {
+		if (!isHexFormat(value)) {
+			console.info(
+				`Cannot update register's value to "${value}" as it is not a valid hex format`
+			);
+			return;
+		}
+
+		onRegisterChange?.(registerName as RegisterName, fromHex(value));
+	};
+
 	return (
 		<Paper sx={{ p: 2, height: '100%' }}>
 			<Typography variant="h2" mb={2}>
@@ -42,9 +61,9 @@ export default function ParametersForm({
 								key={`param-${registerName}`}
 								label={registerName}
 								type="text"
-								value={registerValue}
+								value={toHex(registerValue)}
 								onChange={(event) =>
-									onRegisterChange?.(
+									handleRegisterValueChange(
 										registerName as RegisterName,
 										event.target.value
 									)
