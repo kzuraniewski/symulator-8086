@@ -5,7 +5,7 @@ const VIEW_WIDTH = 16;
 
 export default function MemoryView({ memory }: { memory: Memory }) {
 	return (
-		<div>
+		<Paper sx={{ p: 2 }}>
 			<Typography variant="h2" mb={2}>
 				Pamięć
 			</Typography>
@@ -19,8 +19,12 @@ export default function MemoryView({ memory }: { memory: Memory }) {
 				{memory.map((memoryValue, index) => (
 					<Box
 						sx={{
-							p: 0.3,
+							py: 0.3,
+							px: 1,
 							border: '1px solid rgba(0, 0, 0, 0.2)',
+							display: 'flex',
+							justifyContent: 'center',
+							alignItems: 'center',
 						}}
 						key={`memoryValue-${index}`}
 					>
@@ -28,6 +32,6 @@ export default function MemoryView({ memory }: { memory: Memory }) {
 					</Box>
 				))}
 			</Paper>
-		</div>
+		</Paper>
 	);
 }

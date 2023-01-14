@@ -38,7 +38,7 @@ export default function OrderSelect({
 	};
 
 	return (
-		<Stack direction="row" gap={2} mx="auto" mt={10} width="fit-content">
+		<Stack direction="row" gap={2}>
 			<FormControl>
 				<InputLabel>Rozkaz</InputLabel>
 				<Select

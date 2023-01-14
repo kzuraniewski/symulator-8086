@@ -1,4 +1,4 @@
-import { Stack, Typography } from '@mui/material';
+import { Paper, Stack, Typography } from '@mui/material';
 import {
 	// AddressingModeSelect,
 	Field,
@@ -19,7 +19,7 @@ export default function ParametersForm({
 	// onAddressingModeChange?: (value: AddressingMode) => void;
 }) {
 	return (
-		<div>
+		<Paper sx={{ p: 2, height: '100%' }}>
 			<Typography variant="h2" mb={2}>
 				Rejestry
 			</Typography>
@@ -69,6 +69,6 @@ export default function ParametersForm({
 				onChange={(value) => onAddressingModeChange?.(value)}
 			/> */}
 			</Stack>
-		</div>
+		</Paper>
 	);
 }
