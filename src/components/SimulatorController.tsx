@@ -1,5 +1,5 @@
 import { Paper, Stack, Unstable_Grid2 as Grid } from '@mui/material';
-import { OrderSelect, ParametersForm, Actions, MemoryView } from '.';
+import { OrderSelect, ParametersForm, Actions, MemoryView, Panel } from '.';
 import useOrderBody from '../lib/useOrderBody';
 import useSimulator from '../simulator/useSimulator';
 
@@ -55,24 +55,22 @@ export default function SimulatorController() {
 			</Grid>
 
 			<Grid xs={12}>
-				<Stack
-					gap={2}
-					alignItems="center"
-					sx={{ p: 2 }}
-					component={Paper}
-				>
-					<OrderSelect
-						orderBody={orderBody}
-						onChange={setOrderBody}
-					/>
-					<Actions
-						onCalculate={handleCalculate}
-						onReset={handleReset}
-						disableCalculate={
-							orderBody.arguments[0] === orderBody.arguments[1]
-						}
-					/>
-				</Stack>
+				<Panel>
+					<Stack gap={2} alignItems="center">
+						<OrderSelect
+							orderBody={orderBody}
+							onChange={setOrderBody}
+						/>
+						<Actions
+							onCalculate={handleCalculate}
+							onReset={handleReset}
+							disableCalculate={
+								orderBody.arguments[0] ===
+								orderBody.arguments[1]
+							}
+						/>
+					</Stack>
+				</Panel>
 			</Grid>
 		</Grid>
 	);

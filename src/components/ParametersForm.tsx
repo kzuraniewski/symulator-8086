@@ -1,7 +1,8 @@
-import { Paper, Stack, Typography } from '@mui/material';
+import { Stack } from '@mui/material';
 import {
 	// AddressingModeSelect,
 	Field,
+	Panel,
 } from '../components';
 import { fromHex, isHexFormat, toHex } from '../lib/hex';
 import type {
@@ -38,11 +39,7 @@ export default function ParametersForm({
 	};
 
 	return (
-		<Paper sx={{ p: 2, height: '100%' }}>
-			<Typography variant="h2" mb={2}>
-				Rejestry
-			</Typography>
-
+		<Panel label="Rejestry">
 			<Stack
 				direction="row"
 				justifyContent="space-between"
@@ -88,6 +85,6 @@ export default function ParametersForm({
 				onChange={(value) => onAddressingModeChange?.(value)}
 			/> */}
 			</Stack>
-		</Paper>
+		</Panel>
 	);
 }
