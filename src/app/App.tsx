@@ -1,12 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Box, Button, Stack } from '@mui/material';
-import { Layout, OrderSelect, ParametersForm } from '../components';
+import { Layout, OrderSelect, ParametersForm, Actions } from '../components';
 import useSimulator from '../simulator/useSimulator';
-import { MethodName } from '../simulator/simulationTypes';
-import Actions from '../components/Actions';
+import useOrderBody from '../lib/useOrderBody';
+import { argv0 } from 'process';
 
 export default function App() {
-	const [methodName, setMethodName] = useState<MethodName>('MOV');
+	const { orderBody, setOrderBody, resetOrderBody } = useOrderBody();
 	const {
 		simulated,
 		resetSimulationState,
@@ -17,37 +15,35 @@ export default function App() {
 	} = useSimulator();
 
 	const handleCalculate = () => {
-		switch (methodName) {
+		const [arg0, arg1] = orderBody.arguments;
+
+		switch (orderBody.orderName) {
 			case 'MOV':
-				console.log('MOV action initiated from AX to BX');
-				mov('BX', 'AX');
+				console.log(`MOV action initiated from ${arg1} to ${argv0}`);
+				mov(arg0, arg1);
 				return;
 			case 'XHCG':
-				console.log('XHCG action initiated for AX and BX');
-				xhcg('AX', 'BX');
+				console.log(`XHCG action initiated for ${arg0} and ${arg1}`);
+				xhcg(arg0, arg1);
 				return;
 			case 'PUSH':
-				console.log('PUSH action initiated for AX');
-				push('AX');
+				console.log(`PUSH action initiated for ${arg0}`);
+				push(arg0);
 				return;
 			case 'POP':
-				console.log('POP action initiated for AX');
-				pop('AX');
+				console.log(`POP action initiated for ${arg0}`);
+				pop(arg0);
 				return;
 		}
 	};
 
 	const handleReset = () => {
 		resetSimulationState();
-		setMethodName('MOV');
+		resetOrderBody();
 	};
 
 	return (
 		<Layout>
-			<Box sx={{ mx: 'auto', mb: 4, width: 'fit-content' }}>
-				<OrderSelect methodName={methodName} onChange={setMethodName} />
-			</Box>
-
 			<ParametersForm
 				params={simulated}
 				onRegisterChange={setRegister}
@@ -55,6 +51,7 @@ export default function App() {
 				onAddressingModeChange={setAddressingMode}
 			/>
 
+			<OrderSelect orderBody={orderBody} onChange={setOrderBody} />
 			<Actions onCalculate={handleCalculate} onReset={handleReset} />
 		</Layout>
 	);

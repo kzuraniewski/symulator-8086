@@ -1,10 +1,10 @@
-import { Stack, TextField, TextFieldProps } from '@mui/material';
-import { AddressingModeSelect } from '../components';
+import { Stack } from '@mui/material';
+import { AddressingModeSelect, Field } from '../components';
 import type {
 	AddressingMode,
 	RegisterName,
-} from '../simulator/simulationTypes';
-import type { State } from '../simulator/simulatedReducer';
+	State,
+} from '../simulator/simulatedReducer';
 
 export default function ParametersForm({
 	params,
@@ -28,7 +28,7 @@ export default function ParametersForm({
 				{Object.entries(params.registers).map(
 					([registerName, registerValue]) => (
 						<Field
-							key={`param_${registerName}`}
+							key={`param-${registerName}`}
 							label={registerName}
 							type="text"
 							value={registerValue}
@@ -42,6 +42,7 @@ export default function ParametersForm({
 					)
 				)}
 
+				{/* FIXME: Value not updated */}
 				<Field
 					label="Offset"
 					type="number"
@@ -57,17 +58,5 @@ export default function ParametersForm({
 				onChange={(value) => onAddressingModeChange?.(value)}
 			/>
 		</Stack>
-	);
-}
-
-function Field(props: TextFieldProps) {
-	return (
-		<TextField
-			variant="filled"
-			size="small"
-			fullWidth
-			sx={{ width: 'calc(50% - 10px)' }}
-			{...props}
-		/>
 	);
 }

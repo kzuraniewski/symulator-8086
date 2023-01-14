@@ -8,7 +8,7 @@ export default function Actions({
 	onReset?: () => void;
 }) {
 	return (
-		<Stack spacing={3} direction="row" justifyContent="center" mt={5}>
+		<Stack spacing={3} direction="row" justifyContent="center" mt={2}>
 			<Button variant="outlined" onClick={onReset}>
 				RESETUJ
 			</Button>

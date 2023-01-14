@@ -1,24 +1,9 @@
 import { useCallback, useReducer } from 'react';
 import simulatedReducer, {
+	AddressingMode,
 	initialSimulatedState,
-	State,
+	RegisterName,
 } from './simulatedReducer';
-import type { AddressingMode, RegisterName } from './simulationTypes';
-
-// TODO: infer this from code instead
-export type SimulationProperties = {
-	simulated: State;
-	resetSimulationState: () => void;
-	setAddressingMode: (value: AddressingMode) => void;
-	setOffset: (value: number) => void;
-	setRegister: (registerName: RegisterName, value: string) => void;
-	orders: {
-		mov: (to: RegisterName, from: RegisterName) => void;
-		xhcg: (first: RegisterName, second: RegisterName) => void;
-		push: (from: RegisterName) => void;
-		pop: (to: RegisterName) => void;
-	};
-};
 
 const useSimulator = () => {
 	const [simulated, dispatch] = useReducer(
@@ -101,7 +86,7 @@ const useSimulator = () => {
 		[]
 	);
 
-	const properties: SimulationProperties = {
+	const properties = {
 		simulated,
 		resetSimulationState,
 		setRegister,

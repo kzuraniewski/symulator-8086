@@ -1,5 +1,26 @@
 import React from 'react';
-import type { AddressingMode, Memory, RegisterName } from './simulationTypes';
+
+export const registerNames = [
+	'AX',
+	'BX',
+	'CX',
+	'DX',
+	// 'BP',
+	// 'DI',
+	// 'SI',
+] as const;
+
+export type RegisterName = typeof registerNames[number];
+
+export const orderNames = ['MOV', 'XHCG', 'PUSH', 'POP'] as const;
+
+export type OrderName = typeof orderNames[number];
+
+export const addressingModes = ['base', 'index', 'base-index'] as const;
+
+export type AddressingMode = typeof addressingModes[number];
+
+export type Memory = number[];
 
 export type Action =
 	| { type: 'order/MOV'; to: RegisterName; from: RegisterName }
@@ -19,15 +40,12 @@ export type State = {
 	offset: number;
 };
 
-export const initialRegisterValues: Record<RegisterName, ''> = {
-	AX: '',
-	BX: '',
-	CX: '',
-	DX: '',
-	BP: '',
-	DI: '',
-	SI: '',
-};
+export const initialRegisterValues = registerNames.reduce(
+	(acc: Partial<Record<RegisterName, string>>, curr) => (
+		(acc[curr] = ''), acc
+	),
+	{}
+) as Record<RegisterName, ''>;
 
 export const initialSimulatedState: State = {
 	stack: [],

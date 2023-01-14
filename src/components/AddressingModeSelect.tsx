@@ -5,7 +5,13 @@ import {
 	FormControlLabel,
 	Radio,
 } from '@mui/material';
-import type { AddressingMode } from '../simulator/simulationTypes';
+import { AddressingMode, addressingModes } from '../simulator/simulatedReducer';
+
+const addressingModeLabelMapping: Record<AddressingMode, string> = {
+	base: 'Bazowe',
+	index: 'Indeksowe',
+	'base-index': 'Bazowo indeksowe',
+};
 
 export default function AddressingModeSelect({
 	value,
@@ -21,21 +27,14 @@ export default function AddressingModeSelect({
 				value={value}
 				onChange={(e) => onChange(e.target.value as AddressingMode)}
 			>
-				<FormControlLabel
-					value="base"
-					control={<Radio />}
-					label="Bazowe"
-				/>
-				<FormControlLabel
-					value="index"
-					control={<Radio />}
-					label="Indeksowe"
-				/>
-				<FormControlLabel
-					value="base-index"
-					control={<Radio />}
-					label="Indeksowo bazowe"
-				/>
+				{addressingModes.map((addressingModeName, index) => (
+					<FormControlLabel
+						key={`addressingMode-${index}`}
+						value={addressingModeName}
+						control={<Radio />}
+						label={addressingModeLabelMapping[addressingModeName]}
+					/>
+				))}
 			</RadioGroup>
 		</FormControl>
 	);
