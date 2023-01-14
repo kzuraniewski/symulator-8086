@@ -1,37 +1,29 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Box, Button, Stack } from '@mui/material';
-import {
-	Layout,
-	OrderSelect,
-	ParametersForm,
-	AddressingModeSelect,
-} from '../components';
+import { Layout, OrderSelect, ParametersForm } from '../components';
 import useSimulator from '../simulator/useSimulator';
-import { AddressingMode, MethodName } from '../simulator/simulationTypes';
-import useInputParams from '../lib/useInputParams';
+import { MethodName } from '../simulator/simulationTypes';
 
 export default function App() {
 	const [methodName, setMethodName] = useState<MethodName>('MOV');
-	const [addressingMode, setAddressingMode] =
-		useState<AddressingMode>('base');
-	const { inputParams, setInputParams, resetInputParams } = useInputParams();
 	const {
 		simulated,
 		resetSimulationState,
+		setRegister,
+		setOffset,
+		setAddressingMode,
 		orders: { mov, xhcg, push, pop },
 	} = useSimulator();
 
 	const handleCalculate = () => {
-		const { AX, BX, CX, DX, BP, DI, SI, offset, addressingMode } =
-			inputParams;
-
 		switch (methodName) {
 			case 'MOV':
-				console.log('MOV action initiated from BX to AX');
+				console.log('MOV action initiated from AX to BX');
 				mov('BX', 'AX');
 				return;
 			case 'XHCG':
-				console.log('XHCG action initiated');
+				console.log('XHCG action initiated for AX and BX');
+				xhcg('AX', 'BX');
 				return;
 			case 'PUSH':
 				console.log('PUSH action initiated for AX');
@@ -44,42 +36,21 @@ export default function App() {
 		}
 	};
 
-	const reset = () => {
-		resetSimulationState();
-		resetInputParams();
-		setAddressingMode('index');
-	};
-
 	return (
 		<Layout>
 			<Box sx={{ mx: 'auto', mb: 4, width: 'fit-content' }}>
 				<OrderSelect methodName={methodName} onChange={setMethodName} />
 			</Box>
 
-			<Stack
-				direction="row"
-				justifyContent="space-between"
-				alignItems="stretch"
-				spacing={3}
-			>
-				<ParametersForm
-					params={inputParams}
-					onChange={(paramName, value) =>
-						setInputParams((params) => ({
-							...params,
-							[paramName]: value,
-						}))
-					}
-				/>
-
-				<AddressingModeSelect
-					value={addressingMode}
-					onChange={setAddressingMode}
-				/>
-			</Stack>
+			<ParametersForm
+				params={simulated}
+				onRegisterChange={setRegister}
+				onOffsetChange={setOffset}
+				onAddressingModeChange={setAddressingMode}
+			/>
 
 			<Stack spacing={3} direction="row" justifyContent="center" mt={5}>
-				<Button variant="outlined" onClick={reset}>
+				<Button variant="outlined" onClick={resetSimulationState}>
 					RESETUJ
 				</Button>
 				<Button variant="contained" onClick={handleCalculate}>
