@@ -4,3 +4,4 @@ export { default as ParametersForm } from './ParametersForm';
 export { default as AddressingModeSelect } from './AddressingModeSelect';
 export { default as Actions } from './Actions';
 export { default as Field } from './Field';
+export { default as MemoryView } from './MemoryView';

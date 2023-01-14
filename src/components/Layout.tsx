@@ -6,7 +6,7 @@ export default function Layout({ children }: PropsWithChildren) {
 		<Box sx={{ backgroundColor: 'rgba(0, 0, 0, 0.03)', height: '100vh' }}>
 			<Box sx={{ margin: '0 auto', maxWidth: 800 }}>
 				<Box component="header" mb={4}>
-					<Typography variant="h3" align="center" mb={2}>
+					<Typography variant="h1" align="center" mb={2}>
 						Symulator Intel 8086
 					</Typography>
 

@@ -49,7 +49,7 @@ export const initialRegisterValues = registerNames.reduce(
 
 export const initialSimulatedState: State = {
 	stack: [],
-	memory: Array<number>(1024 * 1024).fill(0),
+	memory: Array<number>(16 * 8).fill(0),
 	registers: initialRegisterValues,
 	addressingMode: 'base',
 	offset: 0,

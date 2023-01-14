@@ -57,7 +57,7 @@ export default function OrderSelect({
 			</FormControl>
 
 			{orderBody.arguments.map((argValue, argIndex) => (
-				<FormControl>
+				<FormControl key={`argValue-${argIndex}`}>
 					<InputLabel>Argument {argIndex}</InputLabel>
 					<Select
 						value={argValue}

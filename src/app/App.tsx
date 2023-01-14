@@ -1,7 +1,14 @@
-import { Layout, OrderSelect, ParametersForm, Actions } from '../components';
+import { Stack, ThemeProvider } from '@mui/material';
+import {
+	Layout,
+	OrderSelect,
+	ParametersForm,
+	Actions,
+	MemoryView,
+} from '../components';
 import useSimulator from '../simulator/useSimulator';
 import useOrderBody from '../lib/useOrderBody';
-import { argv0 } from 'process';
+import theme from './theme';
 
 export default function App() {
 	const { orderBody, setOrderBody, resetOrderBody } = useOrderBody();
@@ -9,8 +16,8 @@ export default function App() {
 		simulated,
 		resetSimulationState,
 		setRegister,
-		setOffset,
-		setAddressingMode,
+		// setOffset,
+		// setAddressingMode,
 		orders: { mov, xhcg, push, pop },
 	} = useSimulator();
 
@@ -19,7 +26,7 @@ export default function App() {
 
 		switch (orderBody.orderName) {
 			case 'MOV':
-				console.log(`MOV action initiated from ${arg1} to ${argv0}`);
+				console.log(`MOV action initiated from ${arg1} to ${arg0}`);
 				mov(arg0, arg1);
 				return;
 			case 'XHCG':
@@ -43,16 +50,19 @@ export default function App() {
 	};
 
 	return (
-		<Layout>
-			<ParametersForm
-				params={simulated}
-				onRegisterChange={setRegister}
-				onOffsetChange={setOffset}
-				onAddressingModeChange={setAddressingMode}
-			/>
+		<ThemeProvider theme={theme}>
+			<Layout>
+				<Stack direction="row" justifyContent="space-between">
+					<ParametersForm
+						params={simulated}
+						onRegisterChange={setRegister}
+					/>
+					<MemoryView memory={simulated.memory} />
+				</Stack>
 
-			<OrderSelect orderBody={orderBody} onChange={setOrderBody} />
-			<Actions onCalculate={handleCalculate} onReset={handleReset} />
-		</Layout>
+				<OrderSelect orderBody={orderBody} onChange={setOrderBody} />
+				<Actions onCalculate={handleCalculate} onReset={handleReset} />
+			</Layout>
+		</ThemeProvider>
 	);
 }
