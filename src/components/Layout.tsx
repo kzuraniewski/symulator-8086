@@ -11,7 +11,7 @@ export default function Layout({ children }: PropsWithChildren) {
 				minHeight: '100vh',
 			}}
 		>
-			<Box sx={{ margin: '0 auto', maxWidth: 800 }}>
+			<Box sx={{ margin: '0 auto', maxWidth: 1000 }}>
 				<Typography variant="h1" align="center" mb={5}>
 					Symulator Intel 8086
 				</Typography>

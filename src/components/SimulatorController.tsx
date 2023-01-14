@@ -2,6 +2,7 @@ import { Paper, Stack, Unstable_Grid2 as Grid } from '@mui/material';
 import { OrderSelect, ParametersForm, Actions, MemoryView, Panel } from '.';
 import useOrderBody from '../lib/useOrderBody';
 import useSimulator from '../simulator/useSimulator';
+import StackView from './StackView';
 
 export default function SimulatorController() {
 	const { orderBody, setOrderBody, resetOrderBody } = useOrderBody();
@@ -50,8 +51,13 @@ export default function SimulatorController() {
 					onRegisterChange={setRegister}
 				/>
 			</Grid>
-			<Grid xs={8}>
+
+			<Grid xs={6}>
 				<MemoryView memory={simulated.memory} />
+			</Grid>
+
+			<Grid xs={2}>
+				<StackView stack={simulated.stack} />
 			</Grid>
 
 			<Grid xs={12}>
