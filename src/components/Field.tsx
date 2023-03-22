@@ -7,6 +7,9 @@ export default function Field(props: TextFieldProps) {
 			size="small"
 			fullWidth
 			sx={{ width: 'calc(50% - 10px)' }}
+			InputProps={{
+				sx: { fontFamily: 'Roboto Mono' },
+			}}
 			{...props}
 		/>
 	);

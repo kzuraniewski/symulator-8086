@@ -22,6 +22,7 @@ export default function MemoryView({ memory }: { memory: Memory }) {
 							display: 'flex',
 							justifyContent: 'center',
 							alignItems: 'center',
+							fontFamily: 'Roboto Mono',
 						}}
 						key={`memoryValue-${index}`}
 					>

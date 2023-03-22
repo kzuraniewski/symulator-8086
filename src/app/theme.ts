@@ -5,6 +5,7 @@ const theme = createTheme({
 		mode: 'dark',
 	},
 	typography: {
+		fontFamily: ['Roboto', 'Roboto Mono'].join(','),
 		h1: {
 			fontSize: '3rem',
 		},
