@@ -34,7 +34,7 @@ export default function SimulatorController() {
 
 	return (
 		<Grid container spacing={2} justifyContent="stretch">
-			<Grid xs={4}>
+			<Grid xs={8} md={4}>
 				<ParametersForm
 					params={simulated}
 					onRegisterChange={setRegister}
@@ -43,12 +43,12 @@ export default function SimulatorController() {
 				/>
 			</Grid>
 
-			<Grid xs={6}>
-				<MemoryView memory={simulated.memory} />
+			<Grid xs={4} md={2}>
+				<StackView stack={simulated.stack} />
 			</Grid>
 
-			<Grid xs={2}>
-				<StackView stack={simulated.stack} />
+			<Grid xs={12} md={6}>
+				<MemoryView memory={simulated.memory} />
 			</Grid>
 
 			<Grid xs={12}>
